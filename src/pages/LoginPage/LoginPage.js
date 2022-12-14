@@ -9,11 +9,13 @@ export default function LoginPage() {
             <Form>
                 <input
                     id="email"
+                    type="email"
                     placeholder="email"
                     required
                 />
                 <input
                     id="senha"
+                    type="password"
                     placeholder="senha"
                     required
                 />
