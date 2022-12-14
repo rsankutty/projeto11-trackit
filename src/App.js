@@ -12,7 +12,6 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      TrackIt
       <BrowserRouter>
         <Routes>
           <Route path="/habitos" element={<HabitsPage />} />
