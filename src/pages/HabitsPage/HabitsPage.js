@@ -2,17 +2,25 @@ import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import Habit from "../../components/Habit";
 import Footer from "../../components/Footer";
+import { useState, useEffect } from 'react';
 
 export default function HabitsPage() {
+
+    const [addHabitsArr,setAddHabitsArr] = useState([]);
+    
+    function addHabit() {
+        setAddHabitsArr([...addHabitsArr,<Habit/>])
+    }
+
     return (
         <PageContainer>
             <NavBar />
             <HabitsContainer>
                 <AddHabitContainer>
                     <h1>Meus Hábitos</h1>
-                    <button>+</button>
+                    <button onClick={addHabit}>+</button>
                 </AddHabitContainer>
-                <Habit></Habit>
+                {addHabitsArr.length!=0? addHabitsArr.map(item => item) : <></>}
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </HabitsContainer>
             <Footer />
@@ -37,6 +45,9 @@ const HabitsContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 338px;
+    p{
+        margin-top: 8px;
+    }
 `;
 
 const AddHabitContainer = styled.div`
@@ -44,7 +55,7 @@ const AddHabitContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 85px;
+    height: 77px;
     color: #126BA5;
     button{
         background-color: #52B6FF;

@@ -1,34 +1,78 @@
 import styled from "styled-components";
 import logoTrackIt from "../../assets/logo-trackit.svg"
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function SignupPage() {
+
+    const navigate = useNavigate()
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+        name:'',
+        image:''
+    });
+
+    function handleForm (e) {
+        setForm({
+          ...form,
+          [e.target.name]: e.target.value,
+        }) 
+      }
+
+    function createUser(e){
+        e.preventDefault()
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up"
+        const body = form
+        console.log(form)
+
+        const promise = axios.post(URL,body)
+        promise.then(res => {
+            alert("Cadastro realizado com sucesso!")
+            navigate("/")
+        })
+        promise.catch(err => alert(err.response.data.message))
+    }
+
     return (
         <PageContainer>
             <img src={logoTrackIt} alt="logo trackit" />
-            <Form>
+            <Form onSubmit={createUser}>
                 <input
                     id="email"
                     type="email"
                     placeholder="email"
+                    name="email"
+                    onChange={handleForm} 
+                    value={form.email}
                     required
                 />
                 <input
                     id="senha"
                     type="password"
                     placeholder="senha"
+                    name="password"
+                    onChange={handleForm} 
+                    value={form.password}
                     required
                 />
                 <input
-                    id="nome"
+                    id="name"
                     type="text"
                     placeholder="nome"
+                    name="name"
+                    onChange={handleForm} 
+                    value={form.name}
                     required
                 />
                 <input
-                    id="foto"
+                    id="image"
                     type="url"
-                    placeholder="foto"
+                    placeholder="url"
+                    name="image"
+                    onChange={handleForm} 
+                    value={form.image}
                     required
                 />
 
@@ -72,6 +116,7 @@ const Form = styled.form`
         height: 45px;
         border: 1px solid #D5D5D5;
         border-radius: 5px;
+        padding-left: 11px;
     }
 `
 
