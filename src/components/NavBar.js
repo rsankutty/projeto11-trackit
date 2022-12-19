@@ -1,10 +1,14 @@
 import styled from "styled-components";
+import { useAuth } from "../providers/auth";
+
 
 export default function NavBar(){
+    const {userImage} = useAuth()
+
     return(
         <NavContainer>
             <h1>TrackIt</h1>
-            <img src="https://play-lh.googleusercontent.com/ZqSUbqjoUmb-2MpPNkzvh9O0jBiOffhdocrZRwZ2Jliwy3TJ8DawPvjZx_AonSiw7e5p" alt="profile" />
+            <img src={userImage} alt="profile" />
         </NavContainer>
     );
 }

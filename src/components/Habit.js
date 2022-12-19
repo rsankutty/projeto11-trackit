@@ -3,16 +3,11 @@ import { useState, useEffect } from 'react';
 import { useHabits } from "../providers/userHabits";
 
 
-export default function Habit() {
+export default function Habit({setAddBtn}) {
     const weekdays = ['S', 'T', 'Q', 'Q', 'S', 'S']
     const {addHabits,setAddHabits} = useHabits()
-    console.log(addHabits)
+    console.log('addhabits',addHabits)
 
-    function removeHabit(index) {
-        let aux = [...addHabits]
-        aux.pop()
-        setAddHabits(aux)
-    }
 
 
     function WeekButton({ day }) {
@@ -37,6 +32,11 @@ export default function Habit() {
         e.preventDefault()
         console.log("criar habito")
     }
+
+    function removeHabit() {
+        setAddBtn(false)
+    }
+
 
     return (
         <HabitContainer>
