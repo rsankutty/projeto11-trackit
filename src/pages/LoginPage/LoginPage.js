@@ -3,11 +3,12 @@ import logoTrackIt from "../../assets/logo-trackit.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from "../../providers/auth";
 
 export default function LoginPage() {
 
     const navigate = useNavigate()
-    const [userToken,setUserToken] = useState('')
+    const {userToken,setUserToken} = useAuth()
 
     const [form, setForm] = useState({
         email: '',

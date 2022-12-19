@@ -1,5 +1,10 @@
+import { useAuth } from "../../providers/auth";
+
+
 export default function HistoryPage(){
+    const {userToken} = useAuth()
+
     return(
-        <h1>history page</h1>
+        <h1>{userToken}</h1>
     );
 }

@@ -1,8 +1,19 @@
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
+import { useHabits } from "../providers/userHabits";
+
 
 export default function Habit() {
     const weekdays = ['S', 'T', 'Q', 'Q', 'S', 'S']
+    const {addHabits,setAddHabits} = useHabits()
+    console.log(addHabits)
+
+    function removeHabit(index) {
+        let aux = [...addHabits]
+        aux.pop()
+        setAddHabits(aux)
+    }
+
 
     function WeekButton({ day }) {
 
@@ -22,7 +33,7 @@ export default function Habit() {
         )
     }
 
-    function createHabit(e){
+    function createHabit(e) {
         e.preventDefault()
         console.log("criar habito")
     }
@@ -41,7 +52,7 @@ export default function Habit() {
                         {weekdays.map((day, index) => <WeekButton key={index} day={day} />)}
                     </DaysContainer>
                     <ButtonsContainer>
-                        <p>Cancelar</p>
+                        <p onClick={removeHabit}>Cancelar</p>
                         <button type="submit">Salvar</button>
                     </ButtonsContainer>
                 </Form>

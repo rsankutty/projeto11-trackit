@@ -3,13 +3,35 @@ import NavBar from "../../components/NavBar";
 import Habit from "../../components/Habit";
 import Footer from "../../components/Footer";
 import { useState, useEffect } from 'react';
+import { useAuth } from "../../providers/auth";
+import axios from "axios";
+import { useHabits } from "../../providers/userHabits";
 
 export default function HabitsPage() {
+    const { addHabits, setAddHabits } = useHabits()
+    const [HabitsArr, setHabitsArr] = useState([])
+    const { userToken } = useAuth();
+    const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+    const nohabits = "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
 
-    const [addHabitsArr,setAddHabitsArr] = useState([]);
-    
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${userToken}`
+        }
+    }
+
+    useEffect(() => {
+        const promise = axios.get(URL, config)
+
+        promise.then(res => {
+            setHabitsArr(res.data)
+        })
+        promise.catch(err => alert(err.response.data.message))
+    }, []);
+
+
     function addHabit() {
-        setAddHabitsArr([...addHabitsArr,<Habit/>])
+        setAddHabits([...addHabits, 1])
     }
 
     return (
@@ -20,8 +42,9 @@ export default function HabitsPage() {
                     <h1>Meus Hábitos</h1>
                     <button onClick={addHabit}>+</button>
                 </AddHabitContainer>
-                {addHabitsArr.length!=0? addHabitsArr.map(item => item) : <></>}
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                {HabitsArr.length != 0 ? 
+                HabitsArr.map((item) => item) : 
+                <>{addHabits.map((item,index) => <Habit />)}<p>{nohabits}</p></>}
             </HabitsContainer>
             <Footer />
 
