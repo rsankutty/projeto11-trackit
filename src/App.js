@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import TodayPage from "./pages/TodayPage/TodayPage";
 import { AuthProvider } from "./providers/auth";
+import { ProgressProvider } from "./providers/progress";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <>
       <GlobalStyle />
       <AuthProvider>
+        <ProgressProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/habitos" element={<HabitsPage />} />
@@ -23,6 +25,7 @@ function App() {
               <Route path="/hoje" element={<TodayPage />} />
             </Routes>
           </BrowserRouter>
+        </ProgressProvider>
       </AuthProvider>
     </>
   );

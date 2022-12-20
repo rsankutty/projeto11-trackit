@@ -3,20 +3,42 @@ import { Checkbox } from 'react-ionicons'
 import axios from "axios";
 import { useAuth } from "../providers/auth";
 import { useState } from "react";
+import { useProgress } from "../providers/progress";
 
 
 
-export default function TodayHabit({ TodayHabitsArr }) {
 
 
-    const [doneClicked,setDoneClicked] = useState(TodayHabitsArr.done)
+export default function TodayHabit({ TodayHabitsArr, setTodayHabitsArr }) {
+    const { setPercentage } = useProgress()
+    const [doneClicked, setDoneClicked] = useState(TodayHabitsArr.done)
     const { userToken } = useAuth();
     const config = {
         headers: {
             Authorization: `Bearer ${userToken}`,
         },
     };
+    function getInfo() {
+        const URL =
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+        const promise = axios.get(URL, config);
 
+        promise.then((res) => {
+            setTodayHabitsArr(res.data);
+            console.log('resdata', res.data)
+            let total = res.data.length
+            let feito = 0
+            for (let i = 0; i < res.data.length; i++) {
+                if (res.data[i].done === true) {
+                    feito += 1
+                }
+            }
+
+            setPercentage(feito / total * 100)
+
+        });
+        promise.catch((err) => alert(err.response.data.message));
+    }
     function habitDone() {
 
         if (doneClicked === false) {
@@ -28,6 +50,8 @@ export default function TodayHabit({ TodayHabitsArr }) {
             promise.then((res) => {
                 console.log(res)
                 setDoneClicked(true)
+                getInfo()
+
             });
             promise.catch((err) => alert(err.response.data.message));
         } else {
@@ -39,6 +63,7 @@ export default function TodayHabit({ TodayHabitsArr }) {
             promise.then((res) => {
                 console.log(res)
                 setDoneClicked(false)
+                getInfo()
             });
             promise.catch((err) => alert(err.response.data.message));
         }
@@ -49,16 +74,17 @@ export default function TodayHabit({ TodayHabitsArr }) {
 
     console.log('todayhabit', TodayHabitsArr)
     return (
-        <HabitContainer>
+        <HabitContainer data-test="today-habit-container">
             <HabitCard>
                 <Wrapper>
-                    <h1>{TodayHabitsArr.name}</h1>
-                    <p>{`Sequência atual: ${TodayHabitsArr.currentSequence} dias`}</p>
-                    <p>{`Seu recorde: ${TodayHabitsArr.highestSequence} dias`}</p>
+                    <h1 data-test="today-habit-name" >{TodayHabitsArr.name}</h1>
+                    <p data-test="today-habit-sequence">{`Sequência atual: ${TodayHabitsArr.currentSequence} dias`}</p>
+                    <p data-test="today-habit-record" >{`Seu recorde: ${TodayHabitsArr.highestSequence} dias`}</p>
                 </Wrapper>
                 <Checkbox
+                    data-test="today-habit-check-btn"
                     onClick={habitDone}
-                    color={doneClicked? '#8FC549' : '#E7E7E7'}
+                    color={doneClicked ? '#8FC549' : '#E7E7E7'}
                     height="69px"
                     width="69px"
                 />

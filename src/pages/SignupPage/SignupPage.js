@@ -10,24 +10,24 @@ export default function SignupPage() {
     const [form, setForm] = useState({
         email: '',
         password: '',
-        name:'',
-        image:''
+        name: '',
+        image: ''
     });
 
-    function handleForm (e) {
+    function handleForm(e) {
         setForm({
-          ...form,
-          [e.target.name]: e.target.value,
-        }) 
-      }
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+    }
 
-    function createUser(e){
+    function createUser(e) {
         e.preventDefault()
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up"
         const body = form
         console.log(form)
 
-        const promise = axios.post(URL,body)
+        const promise = axios.post(URL, body)
         promise.then(res => {
             alert("Cadastro realizado com sucesso!")
             navigate("/")
@@ -40,45 +40,49 @@ export default function SignupPage() {
             <img src={logoTrackIt} alt="logo trackit" />
             <Form onSubmit={createUser}>
                 <input
+                    data-test="email-input"
                     id="email"
                     type="email"
                     placeholder="email"
                     name="email"
-                    onChange={handleForm} 
+                    onChange={handleForm}
                     value={form.email}
                     required
                 />
                 <input
+                    data-test="password-input"
                     id="senha"
                     type="password"
                     placeholder="senha"
                     name="password"
-                    onChange={handleForm} 
+                    onChange={handleForm}
                     value={form.password}
                     required
                 />
                 <input
+                    data-test="user-name-input"
                     id="name"
                     type="text"
                     placeholder="nome"
                     name="name"
-                    onChange={handleForm} 
+                    onChange={handleForm}
                     value={form.name}
                     required
                 />
                 <input
+                    data-test="user-image-input"
                     id="image"
                     type="url"
                     placeholder="url"
                     name="image"
-                    onChange={handleForm} 
+                    onChange={handleForm}
                     value={form.image}
                     required
                 />
 
-                <button type="submit">Cadastrar</button>
+                <button data-test="signup-btn" type="submit">Cadastrar</button>
             </Form>
-            <Link to={"/"} >Já tem uma conta? Faça login!</Link>
+            <Link data-test="login-link" to={"/"} >Já tem uma conta? Faça login!</Link>
         </PageContainer>
     );
 }

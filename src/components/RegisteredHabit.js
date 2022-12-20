@@ -1,8 +1,35 @@
 import styled from "styled-components";
+import { TrashOutline } from 'react-ionicons'
+import axios from "axios";
+import { useAuth } from "../providers/auth";
 
 
-export default function RegisteredHabit({HabitsArr}) {
+
+export default function RegisteredHabit({ HabitsArr }) {
     const weekdays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+    const { userToken } = useAuth();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userToken}`,
+        },
+    };
+    console.log('registered', HabitsArr)
+
+    function deleteHabit() {
+        const URL =
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${HabitsArr.id}`;
+
+        const promise = axios.delete(URL, config);
+
+        promise.then((res) => {
+            console.log('habito deletado')
+            window.location.reload();
+
+        });
+        promise.catch((err) => alert(err.response.data.message));
+
+    }
 
     function WeekButton({ day, index, HabitsArr }) {
 
@@ -10,7 +37,7 @@ export default function RegisteredHabit({HabitsArr}) {
 
 
         return (
-            <ButtonDiv weekBtnClicked={weekBtnClicked}>
+            <ButtonDiv data-test="habit-day" weekBtnClicked={weekBtnClicked}>
                 {day}
             </ButtonDiv>
         )
@@ -19,12 +46,21 @@ export default function RegisteredHabit({HabitsArr}) {
 
 
     return (
-        <HabitContainer>
+        <HabitContainer data-test="habit-container">
             <HabitCard>
-                <h1>{HabitsArr.name}</h1>
-                <DaysContainer>
-                    {weekdays.map((day, index) => <WeekButton key={index} index={index} day={day} HabitsArr={HabitsArr}/>)}
-                </DaysContainer>
+                <Wrapper>
+                    <h1 data-test="habit-name" >{HabitsArr.name}</h1>
+                    <DaysContainer>
+                        {weekdays.map((day, index) => <WeekButton key={index} index={index} day={day} HabitsArr={HabitsArr} />)}
+                    </DaysContainer>
+                </Wrapper>
+                <TrashOutline
+                    data-test="habit-delete-btn"
+                    color={'#666666'}
+                    height="15px"
+                    width="15px"
+                    onClick={deleteHabit}
+                />
             </HabitCard>
         </HabitContainer>
     );
@@ -40,11 +76,19 @@ const HabitContainer = styled.div`
     margin-bottom: 30px;
 `;
 
+const Wrapper = styled.div`
+   
+`;
+
+
 const HabitCard = styled.div`
     border-radius: 5px;
     background-color: white;
     width: 303px;
     margin: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     h1{
         margin-bottom: 8px;
         color: #666666;

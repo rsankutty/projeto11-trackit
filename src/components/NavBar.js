@@ -6,7 +6,7 @@ export default function NavBar(){
     const {userImage} = useAuth()
 
     return(
-        <NavContainer>
+        <NavContainer data-test="header">
             <h1>TrackIt</h1>
             <img src={userImage} alt="profile" />
         </NavContainer>
@@ -27,6 +27,8 @@ const NavContainer = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     position: fixed;
     top: 0px;
+    font-family: 'Playball', cursive;
+    font-size: 38.982px;
     img {
         border-radius: 98.5px;
         width: 51px;

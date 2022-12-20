@@ -25,7 +25,7 @@ export default function Habit({ setAddBtn,config }) {
         }
 
         return (
-            <ButtonDiv onClick={handleBtnClick} weekBtnClicked={weekBtnClicked} >
+            <ButtonDiv data-test="habit-day"  onClick={handleBtnClick} weekBtnClicked={weekBtnClicked} >
                 {day}
             </ButtonDiv>
         )
@@ -52,10 +52,11 @@ export default function Habit({ setAddBtn,config }) {
 
 
     return (
-        <HabitContainer>
+        <HabitContainer data-test="habit-create-container">
             <HabitCard>
                 <Form onSubmit={createHabit}>
                     <input
+                     data-test="habit-name-input"
                         id="habito"
                         type="text"
                         placeholder="nome do hábito"
@@ -67,8 +68,8 @@ export default function Habit({ setAddBtn,config }) {
                         {weekdays.map((day, index) => <WeekButton index={index} key={index} day={day} />)}
                     </DaysContainer>
                     <ButtonsContainer>
-                        <p onClick={removeHabit}>Cancelar</p>
-                        <button type="submit">Salvar</button>
+                        <p data-test="habit-create-cancel-btn" onClick={removeHabit}>Cancelar</p>
+                        <button data-test="habit-create-save-btn"  type="submit">Salvar</button>
                     </ButtonsContainer>
                 </Form>
             </HabitCard>

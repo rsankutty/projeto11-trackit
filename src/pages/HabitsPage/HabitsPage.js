@@ -23,8 +23,6 @@ export default function HabitsPage() {
     },
   };
 
-
-  console.log('habitsarr', HabitsArr)
   useEffect(() => {
     const promise = axios.get(URL, config);
 
@@ -46,7 +44,7 @@ export default function HabitsPage() {
       <HabitsContainer>
         <AddHabitContainer>
           <h1>Meus Hábitos</h1>
-          <button onClick={addHabit}>+</button>
+          <button  data-test="habit-create-btn" onClick={addHabit}>+</button>
         </AddHabitContainer>
         {addBtn === true ? (
           <>

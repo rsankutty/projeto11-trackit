@@ -8,7 +8,7 @@ import { useAuth } from "../../providers/auth";
 export default function LoginPage() {
 
     const navigate = useNavigate()
-    const {userToken,setUserToken} = useAuth()
+    const { userToken, setUserToken } = useAuth()
 
     const [form, setForm] = useState({
         email: '',
@@ -28,7 +28,7 @@ export default function LoginPage() {
         const body = form
         console.log(form)
 
-        const promise = axios.post(URL,body)
+        const promise = axios.post(URL, body)
         promise.then(res => {
             setUserToken(res.data.token)
             console.log(res.data)
@@ -43,6 +43,7 @@ export default function LoginPage() {
             <img src={logoTrackIt} alt="logo trackit" />
             <Form onSubmit={login}>
                 <input
+                    data-test="email-input"
                     id="email"
                     type="email"
                     placeholder="email"
@@ -52,6 +53,7 @@ export default function LoginPage() {
                     required
                 />
                 <input
+                    data-test="password-input"
                     id="senha"
                     type="password"
                     placeholder="senha"
@@ -61,9 +63,9 @@ export default function LoginPage() {
                     required
                 />
 
-                <button type="submit">Entrar</button>
+                <button data-test="login-btn" type="submit">Entrar</button>
             </Form>
-            <Link to={"/cadastro"} >Não tem uma conta? Cadastre-se!</Link>
+            <Link data-test="signup-link" to={"/cadastro"} >Não tem uma conta? Cadastre-se!</Link>
         </PageContainer>
     );
 }
