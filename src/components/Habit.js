@@ -1,23 +1,26 @@
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
-import { useHabits } from "../providers/userHabits";
+import axios from "axios";
 
 
-export default function Habit({setAddBtn}) {
-    const weekdays = ['S', 'T', 'Q', 'Q', 'S', 'S']
-    const {addHabits,setAddHabits} = useHabits()
-    console.log('addhabits',addHabits)
+export default function Habit({ setAddBtn,config }) {
+    const weekdays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+    const daysArr = []
+    let name = ''
 
-
-
-    function WeekButton({ day }) {
+    function WeekButton({ day, index }) {
 
         const [weekBtnClicked, setWeekBtnClicked] = useState(false)
+
+
         function handleBtnClick() {
             if (weekBtnClicked === false) {
                 setWeekBtnClicked(true)
+                daysArr.push(index)
             } else {
                 setWeekBtnClicked(false)
+                let aux = daysArr.indexOf(index)
+                daysArr.splice(aux, 1)
             }
         }
 
@@ -30,7 +33,17 @@ export default function Habit({setAddBtn}) {
 
     function createHabit(e) {
         e.preventDefault()
-        console.log("criar habito")
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+        const form ={name:name,days:daysArr}
+        const body = form
+        console.log(form)
+
+        const promise = axios.post(URL, body,config)
+        promise.then(res => {
+            console.log(res.data)
+            window.location.reload();
+        })
+        promise.catch(err => alert(err.response.data.message))
     }
 
     function removeHabit() {
@@ -46,10 +59,12 @@ export default function Habit({setAddBtn}) {
                         id="habito"
                         type="text"
                         placeholder="nome do hábito"
+                        onChange={e => name = e.target.value}
+                        name="name"
                         required
                     />
                     <DaysContainer>
-                        {weekdays.map((day, index) => <WeekButton key={index} day={day} />)}
+                        {weekdays.map((day, index) => <WeekButton index={index} key={index} day={day} />)}
                     </DaysContainer>
                     <ButtonsContainer>
                         <p onClick={removeHabit}>Cancelar</p>
