@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { useState, useEffect } from 'react';
-import axios from "axios";
-import Habit from "./Habit";
 
 
 export default function RegisteredHabit({HabitsArr}) {

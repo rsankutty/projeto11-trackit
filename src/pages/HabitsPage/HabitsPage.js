@@ -12,7 +12,7 @@ export default function HabitsPage() {
   const [HabitsArr, setHabitsArr] = useState([]);
   const [addBtn, setAddBtn] = useState(false);
   const { userToken } = useAuth();
-  const URL = 
+  const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
   const nohabits =
     "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
@@ -24,7 +24,7 @@ export default function HabitsPage() {
   };
 
 
-  console.log('habitsarr',HabitsArr)
+  console.log('habitsarr', HabitsArr)
   useEffect(() => {
     const promise = axios.get(URL, config);
 
@@ -50,14 +50,14 @@ export default function HabitsPage() {
         </AddHabitContainer>
         {addBtn === true ? (
           <>
-            {HabitsArr.map((item) =>  <RegisteredHabit HabitsArr={item}/>)}
             <Habit config={config} setAddBtn={setAddBtn} />
+            {HabitsArr.map((item) => <RegisteredHabit HabitsArr={item} />)}
           </>
         ) : (<>
-          {HabitsArr.map((item) => <RegisteredHabit HabitsArr={item}/>)}
-          </>
+          {HabitsArr.map((item) => <RegisteredHabit HabitsArr={item} />)}
+        </>
         )}
-        {HabitsArr.length===0? <p>{nohabits}</p>:<></>}
+        {HabitsArr.length === 0 ? <p>{nohabits}</p> : <></>}
       </HabitsContainer>
       <Footer />
     </PageContainer>
@@ -72,6 +72,7 @@ const PageContainer = styled.div`
   width: 375px;
   height: 667px;
   margin-top: 70px;
+  margin-bottom: 75px;
   background-color: #f2f2f2;
 `;
 

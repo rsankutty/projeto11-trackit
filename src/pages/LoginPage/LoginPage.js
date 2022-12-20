@@ -32,7 +32,7 @@ export default function LoginPage() {
         promise.then(res => {
             setUserToken(res.data.token)
             console.log(res.data)
-            navigate("/habitos")
+            navigate("/hoje")
         })
         promise.catch(err => alert(err.response.data.message))
 

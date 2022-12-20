@@ -18,8 +18,8 @@ export default function Footer() {
 
     return (
         <FooterContainer>
-            <p onClick={()=>navigate("/habitos")}>Hábitos</p>
-            <ProgressBarContainer>
+            <p onClick={() => navigate("/habitos")}>Hábitos</p>
+            <ProgressBarContainer onClick={() => navigate("/hoje")}>
                 <CircularProgressbar
                     value={percentage}
                     text={`${percentage}%`}
@@ -33,7 +33,7 @@ export default function Footer() {
                     })}
                 />
             </ProgressBarContainer>
-            <p onClick={()=>navigate("/historico")}>Histórico</p>
+            <p onClick={() => navigate("/historico")}>Histórico</p>
         </FooterContainer>
     );
 }
